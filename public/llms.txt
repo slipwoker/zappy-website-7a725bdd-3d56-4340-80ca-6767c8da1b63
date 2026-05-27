@@ -7,45 +7,45 @@
 ## Pages
 
 ### בית
-https://benda-7a725bdd.zappy5.app
+https://example.com
 גלה את קולקציית אמנות הקיר התלת־ממדית של Benda — עיצובים מינימליסטיים בסגנון קו אמנות שמביאים עומק וסטייל לכל חדר. הזמן עכשיו והפוך את הקירות שלך ליצירת מופת.
 
 ### אומנות
-https://benda-7a725bdd.zappy5.app/craftsmanship
+https://example.com/craftsmanship
 כל יצירה של Benda מגולפת ביד עם תשומת לב לפרטים הקטנים ביותר. גלה את תהליך היצירה הייחודי של סגנון קו האמנות שלנו ולמד מדוע כל פיסת עיצוב היא חתימה אמנותית בפני עצמה.
 
 ### גלריה
-https://benda-7a725bdd.zappy5.app/gallery
+https://example.com/gallery
 דפדף בגלריית אמנות הקיר המרהיבה של Benda וגלה עיצובים תלת־ממדיים שמשנים חללים. מסלון ועד חדר שינה — מצא את היצירה שתדבר אל הנשמה שלך ותהפוך את הבית לגלריה פרטית.
 
 ### צור קשר
-https://benda-7a725bdd.zappy5.app/contact
+https://example.com/contact
 רוצה לדעת עוד על יצירות הקיר של Benda או לקבל הצעת מחיר מותאמת אישית? צור איתנו קשר עכשיו ונשמח לעזור לך למצוא את העיצוב המושלם שיחיה את הקירות שלך.
 
 ### Products
-https://benda-7a725bdd.zappy5.app/products
+https://example.com/products
 המוצרים שלנו - Benda
 
 ### Product Detail
-https://benda-7a725bdd.zappy5.app/product/:slug
+https://example.com/product/:slug
 פרטי המוצר - Benda
 
 ### Category
-https://benda-7a725bdd.zappy5.app/category/:slug
+https://example.com/category/:slug
 מוצרים - Benda
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://benda-7a725bdd.zappy5.app/privacy
+https://example.com/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://benda-7a725bdd.zappy5.app/terms
+https://example.com/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://benda-7a725bdd.zappy5.app/accessibility
+https://example.com/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
@@ -77,8 +77,8 @@ E-commerce / Wall Art
 
 # Machine-readable feeds
 
-- Sitemap (XML): https://benda-7a725bdd.zappy5.app/sitemap.xml
-- Robots: https://benda-7a725bdd.zappy5.app/robots.txt
-- Flattened page text (for LLMs): https://benda-7a725bdd.zappy5.app/llms-full.txt
-- Products (JSON): https://benda-7a725bdd.zappy5.app/products.json
-- Products (Google Merchant RSS): https://benda-7a725bdd.zappy5.app/product-feed.xml
+- Sitemap (XML): https://example.com/sitemap.xml
+- Robots: https://example.com/robots.txt
+- Flattened page text (for LLMs): https://example.com/llms-full.txt
+- Products (JSON): https://example.com/products.json
+- Products (Google Merchant RSS): https://example.com/product-feed.xml
