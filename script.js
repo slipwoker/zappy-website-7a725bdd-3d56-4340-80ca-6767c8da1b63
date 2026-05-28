@@ -12080,6 +12080,114 @@ function fixContrast(){
   setTimeout(fix, 3000);
 })();
 
+/* ZAPPY_CART_ITEM_NAME_I18N_V1 */
+(function(){
+  function getWebsiteId() {
+    return window.ZAPPY_WEBSITE_ID || document.body.getAttribute('data-website-id') || document.documentElement.getAttribute('data-website-id') || '';
+  }
+  function getLang() {
+    try {
+      var queryLang = new URLSearchParams(window.location.search).get('lang');
+      if (queryLang) return queryLang.split('-')[0].toLowerCase();
+    } catch (e) {}
+    if (window.zappyI18n && typeof window.zappyI18n.getCurrentLanguage === 'function') {
+      return String(window.zappyI18n.getCurrentLanguage() || '').split('-')[0].toLowerCase();
+    }
+    return String(document.documentElement.lang || '').split('-')[0].toLowerCase();
+  }
+  function readCart(key) {
+    try {
+      var cart = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(cart) ? cart : [];
+    } catch(e) {
+      return [];
+    }
+  }
+  function writeCart(key, cart) {
+    try { localStorage.setItem(key, JSON.stringify(cart)); } catch(e) {}
+  }
+  function applyTranslatedNamesToDom(cart) {
+    var lang = getLang();
+    if (!lang) return;
+    cart.forEach(function(item) {
+      if (!item || !item.name_translations || !item.name_translations[lang]) return;
+      var selectors = [
+        '#cart-drawer .cart-item[data-item-id="' + item.id + '"] .cart-item-name',
+        '#cart-drawer .cart-item[data-item-id^="' + item.id + '-"] .cart-item-name'
+      ];
+      selectors.forEach(function(selector) {
+        document.querySelectorAll(selector).forEach(function(el) {
+          el.textContent = item.name_translations[lang];
+        });
+      });
+    });
+  }
+  function refreshFromStoredTranslations() {
+    var websiteId = getWebsiteId();
+    if (!websiteId) return;
+    var key = 'zappy_cart_' + websiteId;
+    applyTranslatedNamesToDom(readCart(key));
+  }
+  function refreshFromProductsApi() {
+    var websiteId = getWebsiteId();
+    var lang = getLang();
+    if (!websiteId || !lang) return;
+    var key = 'zappy_cart_' + websiteId;
+    var cart = readCart(key);
+    var courseItems = cart.filter(function(item) { return item && (item.isCourse === true || item.custom_fields); });
+    if (!courseItems.length) return;
+    var apiBase = (window.ZAPPY_API_BASE || window.zappyApiBase || '').replace(/\/$/, '');
+    var url = apiBase + '/api/ecommerce/storefront/products?websiteId=' + encodeURIComponent(websiteId) + '&lang=' + encodeURIComponent(lang);
+    fetch(url, { credentials: 'include' })
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(payload) {
+        var products = (payload && (payload.data || payload.products)) || [];
+        if (!Array.isArray(products) || !products.length) return;
+        var byId = {};
+        products.forEach(function(product) { if (product && product.id) byId[String(product.id)] = product; });
+        var changed = false;
+        cart.forEach(function(item) {
+          if (!item || !(item.isCourse === true || item.custom_fields)) return;
+          var product = byId[String(item.id)];
+          if (!product) return;
+          if (product.name_translations) {
+            item.name_translations = product.name_translations;
+            changed = true;
+          }
+          if (product.name && item.name !== product.name) {
+            item.name = product.name;
+            changed = true;
+          }
+        });
+        if (changed) writeCart(key, cart);
+        applyTranslatedNamesToDom(cart);
+      })
+      .catch(function(){});
+  }
+  function refresh() {
+    refreshFromStoredTranslations();
+    refreshFromProductsApi();
+  }
+  var originalOpen = window.openCartDrawer;
+  if (typeof originalOpen === 'function' && !originalOpen.__zappyCartNameI18nWrapped) {
+    window.openCartDrawer = function() {
+      var result = originalOpen.apply(this, arguments);
+      setTimeout(refresh, 0);
+      setTimeout(refresh, 250);
+      return result;
+    };
+    window.openCartDrawer.__zappyCartNameI18nWrapped = true;
+  }
+  document.addEventListener('click', function(event) {
+    if (event.target && event.target.closest && event.target.closest('#cart-drawer-toggle, [data-cart-toggle], .cart-link.nav-cart, a.nav-cart')) {
+      setTimeout(refresh, 150);
+      setTimeout(refresh, 500);
+    }
+  }, true);
+  refresh();
+  setTimeout(refresh, 1000);
+})();
+
 
 /* ZAPPY_SECTION_ID_FROM_CLASS */
 (function(){
